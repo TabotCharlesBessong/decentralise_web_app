@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import Vote from '../models/Vote';
 import Project from '../models/Project';
-import { Web3 } from 'web3';
-import crypto from 'crypto';
 import { UserRole } from '../models/User';
+import crypto from 'crypto';
+import blockchainService from '../services/blockchain.service';
 
 interface AuthRequest extends Request {
   user?: {
@@ -11,8 +11,6 @@ interface AuthRequest extends Request {
     role: UserRole;
   };
 }
-
-const web3 = new Web3(process.env.ETHEREUM_RPC_URL || 'http://localhost:8545');
 
 export const castVote = async (req: AuthRequest, res: Response) => {
   try {
@@ -49,9 +47,10 @@ export const castVote = async (req: AuthRequest, res: Response) => {
       .digest('hex');
 
     // Record vote on blockchain
-    const blockchainTransactionId = await recordVoteOnBlockchain(
+    const blockchainTransactionId = await blockchainService.castVote(
       project.blockchainVoteId,
-      voteHash
+      voteHash,
+      req.user?.id.toString() || ''
     );
 
     // Create vote record

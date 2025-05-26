@@ -3,6 +3,7 @@ import Project, { ProjectStatus } from '../models/Project';
 import { Web3 } from 'web3';
 import { authenticate } from '../middleware/auth.middleware';
 import { UserRole } from '../models/User';
+import blockchainService from '../services/blockchain.service';
 
 interface AuthRequest extends Request {
   user?: {
@@ -22,8 +23,8 @@ export const createProject = async (req: AuthRequest, res: Response) => {
       return res.status(401).json({ message: 'User not authenticated' });
     }
 
-    // Create blockchain vote
-    const blockchainVoteId = await createBlockchainVote(title);
+    // Create project on blockchain
+    const blockchainVoteId = await blockchainService.createProject(title);
 
     const project = await Project.create({
       title,
