@@ -1,0 +1,23 @@
+{
+  "name": "api_dec",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "dependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "dotenv": "^16.5.0",
+    "ethers": "^6.14.3",
+    "express": "^5.1.0",
+    "express-fileupload": "^1.5.1",
+    "hardhat": "^2.24.1",
+    "path": "^0.12.7"
+  }
+}
